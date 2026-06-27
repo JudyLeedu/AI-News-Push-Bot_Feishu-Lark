@@ -1,0 +1,134 @@
+# ============================================================
+# AI 资讯分频推送飞书机器人 - 配置文件模板
+# ============================================================
+# 复制此文件为 config.yaml 并填入你的真实配置
+# config.yaml 已被 .gitignore 排除，不会提交到 Git
+
+# --- 飞书机器人 ---
+feishu:
+  app_id: "cli_xxxxxxxxxxxxx"          # 飞书应用 App ID
+  app_secret: "your_app_secret_here"    # 飞书应用 App Secret
+  recipients:
+    - email: "your_email@example.com"   # 接收推送的用户邮箱
+
+# --- LLM 配置（OpenAI 兼容接口）---
+llm:
+  api_base: "https://api.openai.com/v1"
+  api_key: "sk-your-api-key-here"
+  model: "gpt-4o"
+  temperature: 0.7
+  max_tokens: 4096
+
+# --- 调度配置（北京时间）---
+schedule:
+  timezone: "Asia/Shanghai"
+  daily:
+    hour: 8
+    minute: 30
+  weekly:
+    day_of_week: "sat"
+    hour: 8
+    minute: 30
+  monthly:
+    day: "last"
+    hour: 8
+    minute: 30
+
+# --- 信源配置 ---
+sources:
+  daily:
+    # 可直接抓取
+    - name: "Hacker News"
+      url: "https://hnrss.org/frontpage?q=AI+OR+LLM+OR+GPT+OR+Claude+OR+Gemini"
+      type: "rss"
+    - name: "TLDR AI"
+      url: "https://tldr.tech/ai"
+      type: "web"
+    - name: "The Rundown AI"
+      url: "https://www.therundown.ai/"
+      type: "web"
+    - name: "Product Hunt"
+      url: "https://www.producthunt.com/"
+      type: "web"
+    # 需通过搜索获取的信源（在 processor 中通过 web_search 处理）
+    - name: "OpenAI News"
+      url: "https://openai.com/news/"
+      type: "web"
+    - name: "Lenny's Newsletter"
+      url: "https://www.lennysnewsletter.com/"
+      type: "web"
+    - name: "Latent Space"
+      url: "https://www.latent.space/"
+      type: "web"
+    - name: "YC Combinator"
+      url: "https://www.ycombinator.com/blog"
+      type: "web"
+    - name: "TechCrunch AI"
+      url: "https://techcrunch.com/category/artificial-intelligence/"
+      type: "web"
+
+  weekly:
+    - name: "Simon Willison"
+      url: "https://simonwillison.net/atom/everything/"
+      type: "rss"
+    - name: "The Rundown AI"
+      url: "https://www.therundown.ai/"
+      type: "web"
+    - name: "Anthropic Blog"
+      url: "https://www.anthropic.com/news"
+      type: "web"
+    - name: "HuggingFace Daily Papers"
+      url: "https://huggingface.co/papers"
+      type: "web"
+    - name: "Latent Space"
+      url: "https://www.latent.space/"
+      type: "web"
+    - name: "Google DeepMind Blog"
+      url: "https://deepmind.google/discover/blog/"
+      type: "web"
+    - name: "Meta AI Blog"
+      url: "https://ai.meta.com/blog/"
+      type: "web"
+
+  monthly:
+    - name: "a16z AI"
+      url: "https://a16z.com/ai/"
+      type: "web"
+    - name: "Stanford HAI"
+      url: "https://hai.stanford.edu/news"
+      type: "web"
+    - name: "State of AI"
+      url: "https://www.stateof.ai/"
+      type: "web"
+    - name: "Sequoia AI"
+      url: "https://www.sequoiacap.com/"
+      type: "web"
+    - name: "McKinsey AI Insights"
+      url: "https://www.mckinsey.com/capabilities/quantumblack/our-insights"
+      type: "web"
+
+# --- 内容筛选 ---
+filters:
+  daily_max_items: 5
+  weekly_max_items: 1
+  monthly_max_items: 1
+  keywords:
+    - "AI"
+    - "LLM"
+    - "GPT"
+    - "Claude"
+    - "Gemini"
+    - "model"
+    - "agent"
+    - "product"
+    - "launch"
+    - "open source"
+  exclude_keywords:
+    - "crypto"
+    - "NFT"
+    - "blockchain"
+
+# --- 日志 ---
+logging:
+  level: "INFO"
+  file: "logs/bot.log"

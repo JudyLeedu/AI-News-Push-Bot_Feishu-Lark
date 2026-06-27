@@ -1,0 +1,31 @@
+name: Weekly Brew (周报)
+
+on:
+  schedule:
+    # 每周六北京时间 08:30 (UTC+8) = UTC 00:30
+    - cron: "30 0 * * 6"
+  workflow_dispatch:
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Weekly Push
+        env:
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+          FEISHU_RECIPIENT_EMAIL: ${{ secrets.FEISHU_RECIPIENT_EMAIL }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_API_BASE: ${{ secrets.LLM_API_BASE }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+        run: python -m src.main test weekly
